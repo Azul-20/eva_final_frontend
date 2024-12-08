@@ -1,0 +1,112 @@
+<nav class="navbar navbar-expand-lg encabezado" data-bs-theme="dark">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="">Proyecto</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="dashboard">Dashboard</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="empleados">Empleados</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link " href="cargos">Cargos</a>
+          </li>
+          <li class="nav-item">
+            <button class="nav-link" (click)="logout()">
+              <i class="bi bi-power"></i>
+            </button>
+          </li>
+        </ul>
+      </div>
+    </div>
+</nav>
+<div class="col-md-6 offset-md-3">
+    <h3 class="text-center">Edición de empleado</h3>
+    <form (ngSubmit)="onSubmit()" #empleadoForm="ngForm">
+      <div class="form-group">
+        <label>Nombre : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="nombre"
+          [(ngModel)]="empleado.nombre"
+          name="nombre"
+          required
+          placeholder="Digite su nombre"
+          #nombre="ngModel"
+        />
+        <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+          <div *ngIf="nombre.errors?.['required']">
+            Digite su nombre por favor
+          </div>
+          <div *ngIf="nombre.errors?.['minlength']">
+            El nombre tiene que contener como mínimo 4 caracteres
+          </div>
+          <div *ngIf="nombre.errors?.['maxlength']">
+            El nombre tiene que tener como máximo 10 caracteres
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Apellidos : </label>
+        <input
+          type="text"
+          class="form-control"
+          id="apellidos"
+          [(ngModel)]="empleado.apellidos"
+          name="apellidos"
+          required
+          placeholder="Digite su apellido"
+          #apellido="ngModel"
+        />
+        <div class="alert alert-danger" *ngIf="apellido.invalid && (apellido.dirty || apellido.touched)">
+          <div *ngIf="apellido.errors?.['required']">
+            Digite su apellido por favor
+          </div>
+          <div *ngIf="apellido.errors?.['minlength']">
+            El apellido tiene que contener como mínimo 4 caracteres
+          </div>
+          <div *ngIf="apellido.errors?.['maxlength']">
+            El apellido tiene que tener como máximo 10 caracteres
+          </div>
+        </div>
+      </div>
+  
+      <div class="form-group">
+        <label>Email : </label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          [(ngModel)]="empleado.email"
+          name="email"
+          pattern="[a-zA-Z0-9._%+-]+&#64;[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}"
+          required
+          placeholder="Digite su email"
+          #email="ngModel"
+        />
+        <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
+          <div *ngIf="email.errors?.['required']">
+            Digite su email por favor
+          </div>
+          <div *ngIf="email.errors?.['pattern']">
+            Por favor digite el email con el siguiente formato: user100&#64;gmail.com
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Cargo : </label>
+        <select [(ngModel)]="empleado.cargo_id" name="cargo_id">
+            <option *ngFor="let cargo of cargos" [value]="cargo.id">{{ cargo.nombre }}</option>
+        </select>
+      </div>
+  
+      <button class="btn btn-success" [disabled]="!empleadoForm.form.valid">Guardar</button>
+    </form>
+</div>
